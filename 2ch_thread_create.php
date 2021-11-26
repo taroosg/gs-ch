@@ -9,7 +9,7 @@ if (
 }
 
 if (
-  $_POST['name'] !== 'password'
+  $_POST['password'] !== 'gsacf1111'
 ) {
   echo '<p>Invalid Password...</p>';
   echo '<a href="2ch_thread_read.php">back</a>';
@@ -18,16 +18,9 @@ if (
 
 $name = $_POST['name'];
 
-$dbn = 'mysql:dbname=gsacf_l06_00;charset=utf8mb4;port=3306;host=localhost';
-$user = 'root';
-$pwd = '';
+include('utilities.php');
 
-try {
-  $pdo = new PDO($dbn, $user, $pwd);
-} catch (PDOException $e) {
-  echo json_encode(["db error" => "{$e->getMessage()}"]);
-  exit();
-}
+$pdo = connect_to_db();
 
 $sql = 'INSERT INTO thread_table  VALUES (NULL, :name, now(), now())';
 
