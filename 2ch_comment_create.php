@@ -1,5 +1,5 @@
 <?php
-
+include('utilities.php');
 if (
   !isset($_POST['comment']) || $_POST['comment'] === ''
 ) {
@@ -9,16 +9,7 @@ if (
 $comment = $_POST['comment'];
 $thread_id = $_POST['thread_id'];
 
-$dbn = 'mysql:dbname=gsacf_l06_00;charset=utf8mb4;port=3306;host=localhost';
-$user = 'root';
-$pwd = '';
-
-try {
-  $pdo = new PDO($dbn, $user, $pwd);
-} catch (PDOException $e) {
-  echo json_encode(["db error" => "{$e->getMessage()}"]);
-  exit();
-}
+$pdo = connect_to_db();
 
 $sql = 'INSERT INTO comment_table VALUES (NULL, :thread_id, :comment, now(), now())';
 

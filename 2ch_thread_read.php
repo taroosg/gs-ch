@@ -1,15 +1,8 @@
 <?php
 
-$dbn = 'mysql:dbname=gsacf_l06_00;charset=utf8mb4;port=3306;host=localhost';
-$user = 'root';
-$pwd = '';
+include('utilities.php');
 
-try {
-  $pdo = new PDO($dbn, $user, $pwd);
-} catch (PDOException $e) {
-  echo json_encode(["db error" => "{$e->getMessage()}"]);
-  exit();
-}
+$pdo = connect_to_db();
 
 $sql = 'SELECT * FROM thread_table LEFT OUTER JOIN (SELECT thread_id, COUNT(*) AS count FROM comment_table GROUP BY thread_id) AS count_table ON thread_table.id = count_table.thread_id ORDER BY updated_at DESC;';
 
@@ -38,10 +31,11 @@ foreach ($result as $record) {
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>G's Channel</title>
 </head>
 
 <body>
+  <h1>G's Channel</h1>
   <form action="2ch_thread_create.php" method="post">
     <fieldset>
       <legend>スレ建て</legend>
